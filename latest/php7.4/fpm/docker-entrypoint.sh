@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-echo "$1"
+command=$1
 
-if [[ "$1" =~ start|php-fpm|apache2* ]]; then
+if [[ "$command" =~ start|php-fpm|apache2* ]]; then
     uid=$(id -u)
     gid=$(id -g)
 
@@ -55,6 +55,8 @@ if [[ "$1" =~ start|php-fpm|apache2* ]]; then
         done
 
         if [ $db_available -eq 1 ]; then
+            echo ""
+            echo "Configurando dados"
             php /assets/configure-oc.php
             cp /assets/admin-config-docker.php admin/config.php
             cp /assets/config-docker.php config.php

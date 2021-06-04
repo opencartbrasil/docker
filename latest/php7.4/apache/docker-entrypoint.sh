@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-echo "$1"
+command=$1
 
-if [[ "$1" =~ start|php-fpm|apache2* ]]; then
+if [[ "$command" =~ start|php-fpm|apache2* ]]; then
     uid=$(id -u)
     gid=$(id -g)
 
