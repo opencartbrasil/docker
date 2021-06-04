@@ -3,15 +3,15 @@
 require_once '/var/www/html/system/helper/general.php';
 
 function library($class) {
-	$file = '/var/www/html/system/library/' . str_replace('\\', '/', strtolower($class)) . '.php';
+    $file = '/var/www/html/system/library/' . str_replace('\\', '/', strtolower($class)) . '.php';
 
-	if (is_file($file)) {
-		include_once $file;
+    if (is_file($file)) {
+        include_once $file;
 
-		return true;
-	} else {
-		return false;
-	}
+        return true;
+    } else {
+        return false;
+    }
 }
 
 spl_autoload_register('library');
@@ -90,34 +90,34 @@ class Installer {
             echo "A loja já está instalada";
             return;
         }
-        
+
         $file = '/var/www/html/install/opencart.sql';
-        
+
         if (!file_exists($file)) {
             exit('Não foi possível carregar o arquivo sql: ' . $file);
         }
-        
+
         $lines = file($file);
-        
+
         if ($lines) {
             $sql = '';
-        
+
             foreach ($lines as $line) {
                 if ($line && (substr($line, 0, 2) != '--') && (substr($line, 0, 1) != '#')) {
                     $sql .= $line;
-        
+
                     if (preg_match('/;\s*$/', $line)) {
                         $sql = str_replace("DROP TABLE IF EXISTS `oc_", "DROP TABLE IF EXISTS `" . $data['db_prefix'], $sql);
                         $sql = str_replace("CREATE TABLE `oc_", "CREATE TABLE `" . $data['db_prefix'], $sql);
                         $sql = str_replace("INSERT INTO `oc_", "INSERT INTO `" . $data['db_prefix'], $sql);
-        
+
                         $this->db->query($sql);
-        
+
                         $sql = '';
                     }
                 }
             }
-        
+
             $this->db->query("SET CHARACTER SET utf8");
             $this->db->query("DELETE FROM `" . $data['db_prefix'] . "user` WHERE user_id = '1'");
             $this->db->query("INSERT INTO `" . $data['db_prefix'] . "user` SET user_id = '1', user_group_id = '1', username = '" . $this->db->escape($data['username']) . "', salt = '" . $this->db->escape($salt = token(9)) . "', password = '" . $this->db->escape(sha1($salt . sha1($salt . sha1($data['password'])))) . "', firstname = 'Fulano', lastname = 'de Tal', email = '" . $this->db->escape($data['email']) . "', status = '1', date_added = NOW()");
