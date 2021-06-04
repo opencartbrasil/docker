@@ -60,6 +60,7 @@ if [[ "$command" =~ start|php-fpm|apache2* ]]; then
             php /assets/configure-oc.php
             cp /assets/admin-config-docker.php admin/config.php
             cp /assets/config-docker.php config.php
+            chown "${user}:${group}" admin/config.php config.php
         else
             echo "Não foi possível conectar-se ao banco de dados"
         fi

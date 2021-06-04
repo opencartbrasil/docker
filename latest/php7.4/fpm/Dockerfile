@@ -87,6 +87,8 @@ RUN { \
         echo 'session.cache_limiter = nocache'; \
     } > /usr/local/etc/php/conf.d/opencart-brasil.ini;
 
+VOLUME /var/www/html
+
 # Realiza download da versão
 RUN set -aux; \
     curl -sSLo opencart.tar.gz "https://github.com/opencartbrasil/opencartbrasil/archive/refs/tags/v${VERSION}.tar.gz"; \
@@ -120,9 +122,9 @@ RUN set -aux; \
             touch $oc_file; \
         fi; \
         chown www-data:www-data $oc_file; \
-    done;
-
-VOLUME /var/www/html
+    done; \
+    \
+    chown -R www-data:www-data /var/www
 
 COPY assets/ /assets
 
