@@ -73,7 +73,6 @@ class Installer {
         foreach ($fields as $field) {
             if (empty(trim(getenv($field)))) {
                 $result = false;
-                echo "A variável de ambiente $field é obrigatória para o serviço de e-mail", PHP_EOL;
             }
         }
 
@@ -83,11 +82,7 @@ class Installer {
     public function is_installed($data) {
         $table_setting = $this->db->query('SHOW TABLES LIKES "' . $data['db_prefix'] . 'setting"');
 
-        if ($table_setting->num_rows == 0) {
-            return false;
-        }
-
-        return true;
+        return $table_setting->num_rows > 0;
     }
 
     public function setup_db(array $data) {
