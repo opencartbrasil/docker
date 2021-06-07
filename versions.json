@@ -10,5 +10,17 @@
       "apache"
     ],
     "version": "1.5.0"
+  },
+  "1.5.0": {
+    "phpVersions": [
+      "7.3",
+      "7.4"
+    ],
+    "variants": [
+      "fpm",
+      "fpm-alpine",
+      "apache"
+    ],
+    "version": "1.5.0"
   }
 }

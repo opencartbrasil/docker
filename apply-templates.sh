@@ -43,7 +43,7 @@ for version; do
 		for variant in "${variants[@]}"; do
 			export variant
 
-			dir="$version/php$phpVersion/$variant"
+			dir="versions/$version/php$phpVersion/$variant"
 			mkdir -p "$dir"
 
 			echo "processing $dir ..."
