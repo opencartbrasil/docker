@@ -119,7 +119,7 @@ Ao iniciar a instância do OpenCart Brasil, é possível pré-definir algumas co
 | ---- | --------- | ------ |
 | OCBR_DB_HOST | Endereço do servidor de Banco de Dados | 0.0.0.0 |
 | OCBR_DB_USER | Usuário do Banco de Dados | root |
-| OCBR_DB_PASS | Senha do Banco de Dados | PADRÃO |
+| OCBR_DB_PASS | Senha do Banco de Dados |  |
 | OCBR_DB_DATABASE | Nome do Banco de Dados. É necessário que seja criado antes da instalação. | opencartbrasil |
 | OCBR_DB_PORT | Porta para conexão com Banco de Dados | 3306 |
 | OCBR_DB_PREFIX | Prefixo das tabelas | ocbr_ |
