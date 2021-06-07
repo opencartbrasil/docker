@@ -4,9 +4,9 @@
 # Não o edite diretamente.
 #
 
-FROM php:7.3-fpm
+FROM php:7.4-fpm-alpine
 
-ARG VERSION="1.5.0" \
+ARG VERSION="1.5.1" \
     ENV_MODE="development"
 
 ENV OCBR_HTTP_SERVER="" \
@@ -37,22 +37,21 @@ ENV OCBR_HTTP_SERVER="" \
 
 # Instala as dependências necessárias e habilita as extensões do PHP
 RUN set -ex; \
-        apt update; \
-    apt install -y --no-install-recommends \
-        apt-transport-https \
-        libjpeg62-turbo-dev \
-        libfreetype6-dev \
+        apk update; \
+    apk add --no-cache \
+        freetype-dev \
+        libjpeg-turbo-dev \
         libpng-dev \
         libxml2-dev \
-        libonig-dev \
+        oniguruma-dev \
         libzip-dev \
-        netcat \
-        libcurl4-openssl-dev; \
+        bash \
+        netcat-openbsd \
+        openssl-dev; \
         \
     docker-php-ext-configure gd \
-        --with-jpeg-dir=/usr \
-    --with-png-dir=/usr \
-    --with-freetype-dir=/usr; \
+        --with-freetype \
+    --with-jpeg \
         ; \
     docker-php-ext-install -j$(nproc) \
         gd \

@@ -9,9 +9,9 @@
       "fpm-alpine",
       "apache"
     ],
-    "version": "1.5.0"
+    "version": "1.5.1"
   },
-  "1.5.0": {
+  "1.5.1": {
     "phpVersions": [
       "7.3",
       "7.4"
@@ -21,6 +21,6 @@
       "fpm-alpine",
       "apache"
     ],
-    "version": "1.5.0"
+    "version": "1.5.1"
   }
 }

@@ -4,9 +4,9 @@
 # Não o edite diretamente.
 #
 
-FROM php:7.4-fpm
+FROM php:7.4-apache
 
-ARG VERSION="1.5.0" \
+ARG VERSION="1.5.1" \
     ENV_MODE="development"
 
 ENV OCBR_HTTP_SERVER="" \
@@ -131,6 +131,9 @@ RUN set -aux; \
         chown www-data:www-data $oc_file; \
     done;
 
+RUN set -aux; \
+    a2enmod rewrite; \
+    a2enmod expires
 
 VOLUME /var/www/html
 
@@ -141,4 +144,4 @@ EXPOSE 8888
 
 COPY docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["php-fpm"]
+CMD ["apache2-foreground"]

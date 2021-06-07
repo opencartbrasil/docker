@@ -6,7 +6,7 @@
 
 FROM php:7.3-fpm
 
-ARG VERSION="1.5.0" \
+ARG VERSION="1.5.1" \
     ENV_MODE="development"
 
 ENV OCBR_HTTP_SERVER="" \
