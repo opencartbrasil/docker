@@ -4,17 +4,17 @@
     </a>
 </p>
 
-# Como usar
+# Como utilizar
 
 ## Iniciando uma nova instância
 
-Para iniciar é simples, basta executar o código abaixo em seu terminal
+Para iniciar é muito simples, execute a linha de comando abaixo em seu terminal:
 
 ```bash
 docker run -p 80:80 opencartbrasil:latest
 ```
 
-Para funcionar de forma adequada, é necessário realizar uma conexão com um banco de dados como MySQL ou PostgreSQL.
+Sendo que para funcionar corretamente, é necessário realizar antes a conexão com o banco de dados conforme o exemplo abaixo:
 
 ```bash
 # Conexão com banco de dados
@@ -31,16 +31,17 @@ docker run --network some-name -p 80:80 opencartbrasil:latest
 
 ## Instalação automática
 
-É possível iniciar um *container* já com o OpenCart Brasil instalado e configurado, para isso, é necessário utilizar as seguintes variáveis de ambiente:
+É possível iniciar um *container* com o OpenCart Brasil instalado e configurado, para isso, é necessário preencher no mínimo as variáveis de ambiente abaixo:
 
- - OCBR_DB_DATABASE
- - OCBR_DB_HOST
- - OCBR_DB_PASS
- - OCBR_DB_PORT
  - OCBR_DB_USER
+ - OCBR_DB_PASS
+ - OCBR_DB_DATABASE
+ - OCBR_ADMIN_USER
+ - OCBR_ADMIN_PASS
+ - OCBR_ADMIN_EMAIL
  - OCBR_HTTP_SERVER
 
- Dado que a conexão com banco de dados seja feita como no passo anterior, pasta seguir o exemplo abaixo:
+Conforme o exemplo abaixo:
 
  ```bash
  docker run --network host \
@@ -50,17 +51,18 @@ docker run --network some-name -p 80:80 opencartbrasil:latest
     -e OCBR_DB_DATABASE=opencartbrasil \
     -e OCBR_ADMIN_USER=admin \
     -e OCBR_ADMIN_PASS=123456 \
-    -e "OCBR_HTTP_SERVER=http://www.my-store.com/" \
+    -e OCBR_ADMIN_EMAIL=webmaster@localhost \
+    -e "OCBR_HTTP_SERVER=http://localhost/" \
     opencartbrasil:latest
  ```
 
- Feito isso, o processo de instalação será feito automaticamente.
+ Assim o processo de instalação e configuração do OpenCart Brasil será realizado automaticamente.
 
- > Observação: Caso a conexão com o banco de dados não seja estabelecida em até 2 minutos, o processo de instalação automática falhará e ele terá que ser feito através do passo a passo.
+ > Observação: Se a conexão com o banco de dados não for estabelecida em até 2 minutos, o processo de instalação automática falhará.
 
 ## Instalação via *Docker Compose* ou *Docker Stack Deploy*
 
-Arquivo **ocbr.yaml** com OpenCart Brasil e MySQL
+Arquivo **ocbr.yaml** com OpenCart Brasil e MySQL:
 
 ```yaml
 version: '3'
@@ -101,11 +103,13 @@ services:
       - app-network
 ```
 
-Execute `docker stack deploy -c ocbr.yaml opencartbrasil` ou `docker-compose up`
+Execute no terminal `docker stack deploy -c ocbr.yaml opencartbrasil` ou `docker-compose up`
 
 # Variáveis de Ambiente
 
-Ao iniciar a instância do OpenCart Brasil, é possível pré-definir algumas configurações. Abaixo, seguem as variáveis de ambientes suportadas.
+Ao iniciar a instância do OpenCart Brasil, é possível pré-definir algumas configurações.
+
+Seguem as variáveis de ambientes suportadas:
 
 **Geral**
 
@@ -119,7 +123,7 @@ Ao iniciar a instância do OpenCart Brasil, é possível pré-definir algumas co
 | ---- | --------- | ------ |
 | OCBR_DB_HOST | Endereço do servidor de Banco de Dados | 0.0.0.0 |
 | OCBR_DB_USER | Usuário do Banco de Dados | root |
-| OCBR_DB_PASS | Senha do Banco de Dados |  |
+| OCBR_DB_PASS | Senha do Banco de Dados | |
 | OCBR_DB_DATABASE | Nome do Banco de Dados. É necessário que seja criado antes da instalação. | opencartbrasil |
 | OCBR_DB_PORT | Porta para conexão com Banco de Dados | 3306 |
 | OCBR_DB_PREFIX | Prefixo das tabelas | ocbr_ |
@@ -132,7 +136,7 @@ Ao iniciar a instância do OpenCart Brasil, é possível pré-definir algumas co
 | OCBR_ADMIN_PASS | Senha do painel administrativo |  |
 | OCBR_ADMIN_EMAIL | E-mail do usuário administrativo | webmaster@localhost |
 
-**E-mails**
+**Envio de E-mail**
 
 | Nome | Descrição | Padrão |
 | ---- | --------- | ------ |
