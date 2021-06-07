@@ -1,0 +1,48 @@
+version: '3'
+
+networks:
+    app-network:
+
+services:
+  app:
+    image: psr:latest
+    container_name: app
+    volumes: 
+      - ./src:/var/www/html
+    networks:
+      - app-network
+    ports: 
+      - 80:80
+    environment: 
+      OCBR_HTTP_SERVER: "http://localhost/"
+      OCBR_DB_DRIVER: "pdo"
+      OCBR_DB_HOST: "db"
+      OCBR_DB_USER: "store"
+      OCBR_DB_PASS: "store"
+      OCBR_DB_DATABASE: "opencartbrasil"
+      OCBR_DB_PORT: "3306"
+      OCBR_DB_PREFIX: "oc_"
+      OCBR_ADMIN_USER: "admin"
+      OCBR_ADMIN_PASS: "123456"
+      OCBR_ADMIN_EMAIL: "webmaster@localhost"
+      MAIL_DRIVER: "smtp"
+      MAIL_PARAMETER: ""
+      MAIL_SERVER: "smtp.mailtrap.io"
+      MAIL_USER: "<user>"
+      MAIL_PASS: "<pass>"
+      MAIL_PORT: "587"
+      MAIL_TIMEOUT: "30"
+      MAIL_ADDITIONAL_MAILS: ""
+    depends_on: 
+      - db
+
+  db:
+    image: mysql:5.7
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: store
+      MYSQL_PASSWORD: store
+      MYSQL_DATABASE: opencartbrasil
+    networks:
+      - app-network
