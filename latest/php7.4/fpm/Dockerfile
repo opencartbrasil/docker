@@ -1,3 +1,9 @@
+#
+# NOTA: Arquivo gerado automaticamente
+#
+# Não o edite diretamente.
+#
+
 FROM php:7.4-fpm
 
 ARG VERSION="1.5.0" \
@@ -5,18 +11,21 @@ ARG VERSION="1.5.0" \
 
 ENV OCBR_HTTP_SERVER="" \
     \
+    # Variáveis de ambiente do Banco de Dados
     OCBR_DB_DRIVER="pdo" \
     OCBR_DB_HOST="0.0.0.0" \
     OCBR_DB_USER="root" \
     OCBR_DB_PASS="" \
     OCBR_DB_DATABASE="opencartbrasil" \
     OCBR_DB_PORT="3306" \
-    OCBR_DB_PREFIX="oc_" \
+    OCBR_DB_PREFIX="ocbr_" \
     \
+    # Variáveis de ambiente do usuário da administração
     OCBR_ADMIN_USER="" \
     OCBR_ADMIN_PASS="" \
     OCBR_ADMIN_EMAIL="webmaster@localhost" \
     \
+    # Variáveis de ambiente para serviço de e-mail
     MAIL_DRIVER="" \
     MAIL_PARAMETER="" \
     MAIL_SERVER="" \
@@ -28,7 +37,7 @@ ENV OCBR_HTTP_SERVER="" \
 
 # Instala as dependências necessárias e habilita as extensões do PHP
 RUN set -ex; \
-    apt update; \
+        apt update; \
     apt install -y --no-install-recommends \
         apt-transport-https \
         libjpeg62-turbo-dev \
@@ -37,19 +46,19 @@ RUN set -ex; \
         libxml2-dev \
         libonig-dev \
         libzip-dev \
-        zip \
         netcat \
         libcurl4-openssl-dev; \
-    \
-    docker-php-ext-configure gd --with-jpeg --with-freetype; \
-    \
+        \
+    docker-php-ext-configure gd \
+        --with-freetype \
+    --with-jpeg \
+        ; \
     docker-php-ext-install -j$(nproc) \
         gd \
         pdo \
         mbstring \
         pdo_mysql \
         zip; \
-    rm -rf /var/lib/apt/lists/*; \
     \
     curl -sSLo- https://getcomposer.org/installer | php -- --filename=composer --install-dir=/bin;
 
@@ -87,8 +96,6 @@ RUN { \
         echo 'session.cache_limiter = nocache'; \
     } > /usr/local/etc/php/conf.d/opencart-brasil.ini;
 
-VOLUME /var/www/html
-
 # Realiza download da versão
 RUN set -aux; \
     curl -sSLo opencart.tar.gz "https://github.com/opencartbrasil/opencartbrasil/archive/refs/tags/v${VERSION}.tar.gz"; \
@@ -122,11 +129,12 @@ RUN set -aux; \
             touch $oc_file; \
         fi; \
         chown www-data:www-data $oc_file; \
-    done; \
-    \
-    chown -R www-data:www-data /var/www
+    done;
 
-COPY assets/ /assets
+
+VOLUME /var/www/html
+
+COPY scripts/ /scripts
 
 # Built-in
 EXPOSE 8888

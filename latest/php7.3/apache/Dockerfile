@@ -4,7 +4,7 @@
 # Não o edite diretamente.
 #
 
-FROM php:7.4-apache
+FROM php:7.3-apache
 
 ARG VERSION="1.5.0" \
     ENV_MODE="development"
@@ -50,8 +50,9 @@ RUN set -ex; \
         libcurl4-openssl-dev; \
         \
     docker-php-ext-configure gd \
-        --with-freetype \
-    --with-jpeg \
+        --with-jpeg-dir=/usr \
+    --with-png-dir=/usr \
+    --with-freetype-dir=/usr; \
         ; \
     docker-php-ext-install -j$(nproc) \
         gd \

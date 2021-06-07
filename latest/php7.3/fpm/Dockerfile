@@ -4,7 +4,7 @@
 # Não o edite diretamente.
 #
 
-FROM php:7.4-apache
+FROM php:7.3-fpm
 
 ARG VERSION="1.5.0" \
     ENV_MODE="development"
@@ -50,8 +50,9 @@ RUN set -ex; \
         libcurl4-openssl-dev; \
         \
     docker-php-ext-configure gd \
-        --with-freetype \
-    --with-jpeg \
+        --with-jpeg-dir=/usr \
+    --with-png-dir=/usr \
+    --with-freetype-dir=/usr; \
         ; \
     docker-php-ext-install -j$(nproc) \
         gd \
@@ -131,9 +132,6 @@ RUN set -aux; \
         chown www-data:www-data $oc_file; \
     done;
 
-RUN set -aux; \
-    a2enmod rewrite; \
-    a2enmod expires
 
 VOLUME /var/www/html
 
@@ -144,4 +142,4 @@ EXPOSE 8888
 
 COPY docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["apache2-foreground"]
+CMD ["php-fpm"]

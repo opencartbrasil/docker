@@ -4,7 +4,7 @@
 # Não o edite diretamente.
 #
 
-FROM php:7.4-apache
+FROM php:7.4-fpm-alpine
 
 ARG VERSION="1.5.0" \
     ENV_MODE="development"
@@ -37,17 +37,17 @@ ENV OCBR_HTTP_SERVER="" \
 
 # Instala as dependências necessárias e habilita as extensões do PHP
 RUN set -ex; \
-        apt update; \
-    apt install -y --no-install-recommends \
-        apt-transport-https \
-        libjpeg62-turbo-dev \
-        libfreetype6-dev \
+        apk update; \
+    apk add --no-cache \
+        freetype-dev \
+        libjpeg-turbo-dev \
         libpng-dev \
         libxml2-dev \
-        libonig-dev \
+        oniguruma-dev \
         libzip-dev \
-        netcat \
-        libcurl4-openssl-dev; \
+        bash \
+        netcat-openbsd \
+        openssl-dev; \
         \
     docker-php-ext-configure gd \
         --with-freetype \
@@ -131,9 +131,6 @@ RUN set -aux; \
         chown www-data:www-data $oc_file; \
     done;
 
-RUN set -aux; \
-    a2enmod rewrite; \
-    a2enmod expires
 
 VOLUME /var/www/html
 
@@ -144,4 +141,4 @@ EXPOSE 8888
 
 COPY docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["apache2-foreground"]
+CMD ["php-fpm"]

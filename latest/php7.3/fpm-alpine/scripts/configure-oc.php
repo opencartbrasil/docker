@@ -1,37 +1,53 @@
 <?php
 
-require_once '/var/www/html/system/helper/general.php';
+define('DIR_APPLICATION', '/var/www/html');
+
+require_once DIR_APPLICATION . '/system/helper/general.php';
 
 function library($class) {
-    $file = '/var/www/html/system/library/' . str_replace('\\', '/', strtolower($class)) . '.php';
+    $file = DIR_APPLICATION . '/system/library/' . str_replace('\\', '/', strtolower($class)) . '.php';
 
     if (is_file($file)) {
         include_once $file;
 
         return true;
-    } else {
-        return false;
     }
+    
+    return false;
 }
 
 spl_autoload_register('library');
 spl_autoload_extensions('.php');
 
+date_default_timezone_set('UTC');
+
 class Installer {
-    private $db;
+    private $db = null;
 
     public function __construct() {
-        $this->db = new DB(
-            getenv('OCBR_DB_DRIVER'),
-            getenv('OCBR_DB_HOST'),
-            getenv('OCBR_DB_USER'),
-            getenv('OCBR_DB_PASS'),
-            getenv('OCBR_DB_DATABASE'),
-            getenv('OCBR_DB_PORT')
-        );
+        try {
+            $this->db = new DB(
+                getenv('OCBR_DB_DRIVER'),
+                getenv('OCBR_DB_HOST'),
+                getenv('OCBR_DB_USER'),
+                getenv('OCBR_DB_PASS'),
+                getenv('OCBR_DB_DATABASE'),
+                getenv('OCBR_DB_PORT')
+            );
+        } catch (Exception $e) {
+            echo "Falha ao tentar conexão com o banco de dados.", PHP_EOL;
+            echo $e->getMessage() . PHP_EOL;
+            echo "Instalação automática ignorada.", PHP_EOL, PHP_EOL;
+
+            $this->db = null;
+        }
     }
 
     public function is_valid() {
+        return $this->db !== null;
+    }
+
+    public function is_data_valid() {
         $result = true;
 
         $fields = array(
@@ -86,12 +102,16 @@ class Installer {
     }
 
     public function setup_db(array $data) {
+        if (!$this->is_data_valid()) {
+            exit(1);
+        }
+
         if ($this->is_installed($data)) {
             echo "A loja já está instalada";
             return;
         }
 
-        $file = '/var/www/html/install/opencart.sql';
+        $file = DIR_APPLICATION . '/install/opencart.sql';
 
         if (!file_exists($file)) {
             exit('Não foi possível carregar o arquivo sql: ' . $file);
@@ -156,28 +176,31 @@ class Installer {
 }
 
 $installer = new Installer();
-$installer->setup_db([
-    'db_driver' => getenv('OCBR_DB_DRIVER'),
-    'db_hostname' => getenv('OCBR_DB_HOST'),
-    'db_username' => getenv('OCBR_DB_USER'),
-    'db_password' => getenv('OCBR_DB_PASS'),
-    'db_database' => getenv('OCBR_DB_DATABASE'),
-    'db_port' => getenv('OCBR_DB_PORT'),
-    'db_prefix' => getenv('OCBR_DB_PREFIX'),
-    'username' => getenv('OCBR_ADMIN_USER'),
-    'password' => getenv('OCBR_ADMIN_PASS'),
-    'email' => getenv('OCBR_ADMIN_EMAIL'),
-    'http_server' => getenv('OCBR_HTTP_SERVER'),
-]);
 
-$installer->setup_mail([
-    'db_prefix' => getenv('OCBR_DB_PREFIX'),
-    'config_mail_engine' => getenv('MAIL_DRIVER'),
-    'config_mail_parameter' => getenv('MAIL_PARAMETER'),
-    'config_mail_smtp_hostname' => getenv('MAIL_SERVER'),
-    'config_mail_smtp_username' => getenv('MAIL_USER'),
-    'config_mail_smtp_password' => getenv('MAIL_PASS'),
-    'config_mail_smtp_port' => getenv('MAIL_PORT'),
-    'config_mail_smtp_timeout' => getenv('MAIL_TIMEOUT'),
-    'config_mail_alert' => getenv('MAIL_ADDITIONAL_MAILS'),
-]);
+if ($installer->is_valid()) {
+    $installer->setup_db([
+        'db_driver' => getenv('OCBR_DB_DRIVER'),
+        'db_hostname' => getenv('OCBR_DB_HOST'),
+        'db_username' => getenv('OCBR_DB_USER'),
+        'db_password' => getenv('OCBR_DB_PASS'),
+        'db_database' => getenv('OCBR_DB_DATABASE'),
+        'db_port' => getenv('OCBR_DB_PORT'),
+        'db_prefix' => getenv('OCBR_DB_PREFIX'),
+        'username' => getenv('OCBR_ADMIN_USER'),
+        'password' => getenv('OCBR_ADMIN_PASS'),
+        'email' => getenv('OCBR_ADMIN_EMAIL'),
+        'http_server' => getenv('OCBR_HTTP_SERVER'),
+    ]);
+
+    $installer->setup_mail([
+        'db_prefix' => getenv('OCBR_DB_PREFIX'),
+        'config_mail_engine' => getenv('MAIL_DRIVER'),
+        'config_mail_parameter' => getenv('MAIL_PARAMETER'),
+        'config_mail_smtp_hostname' => getenv('MAIL_SERVER'),
+        'config_mail_smtp_username' => getenv('MAIL_USER'),
+        'config_mail_smtp_password' => getenv('MAIL_PASS'),
+        'config_mail_smtp_port' => getenv('MAIL_PORT'),
+        'config_mail_smtp_timeout' => getenv('MAIL_TIMEOUT'),
+        'config_mail_alert' => getenv('MAIL_ADDITIONAL_MAILS'),
+    ]);
+}
