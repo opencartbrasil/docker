@@ -1,0 +1,6 @@
+# Log files
+.log
+
+# Source
+src
+.jq-template.awk
