@@ -1,6 +1,6 @@
 <p align="center">
     <a href="https://www.opencartbrasil.com.br/">
-        <img src="https://forum.opencartbrasil.com.br/ext/sitesplat/flatbootsminicms/images/logo/logo-colorida.png" alt="Logo OpenCart Brasil">
+        <img src="https://user-images.githubusercontent.com/68618810/121253635-bcde0200-c87f-11eb-809d-1782796bc234.png" alt="Logo OpenCart Brasil">
     </a>
 </p>
 
