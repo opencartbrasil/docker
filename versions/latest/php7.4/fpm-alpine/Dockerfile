@@ -6,10 +6,8 @@
 
 FROM php:7.4-fpm-alpine
 
-ARG VERSION="1.5.1" \
-    ENV_MODE="development"
-
-ENV OCBR_HTTP_SERVER="" \
+ENV VERSION="1.5.1" \
+    OCBR_HTTP_SERVER="" \
     \
     # Variáveis de ambiente do Banco de Dados
     OCBR_DB_DRIVER="pdo" \
@@ -50,9 +48,9 @@ RUN set -ex; \
         openssl-dev; \
         \
     docker-php-ext-configure gd \
-        --with-freetype \
-    --with-jpeg \
-        ; \
+    --with-freetype \
+    --with-jpeg; \
+    \
     docker-php-ext-install -j$(nproc) \
         gd \
         pdo \
@@ -60,8 +58,10 @@ RUN set -ex; \
         pdo_mysql \
         zip; \
     \
-    curl -sSLo- https://getcomposer.org/installer | php -- --filename=composer --install-dir=/bin;
-
+    curl -sSLo- https://getcomposer.org/installer | php -- --filename=composer --install-dir=/bin; \
+    docker-php-source delete \
+        ;
+    
 # Configura regras de exibição do log
 RUN { \
         echo 'error_reporting = E_ERROR | E_WARNING | E_PARSE | E_CORE_ERROR | E_CORE_WARNING | E_COMPILE_ERROR | E_COMPILE_WARNING | E_RECOVERABLE_ERROR'; \
@@ -86,7 +86,7 @@ RUN { \
         echo 'memory_limit = 128M'; \
         echo 'upload_max_filesize = 200M'; \
         echo 'open_basedir = none'; \
-        echo "user_agent = \"Curl-OpenCartBrasil/${VERSION}\""; \
+        echo "user_agent = \"Curl-OpenCartBrasil/1.5.1\""; \
         echo 'post_max_size = 200M'; \
         echo 'session.auto_start = Off'; \
         echo 'session.use_only_cookies = On'; \
@@ -98,7 +98,7 @@ RUN { \
 
 # Realiza download da versão
 RUN set -aux; \
-    curl -sSLo opencart.tar.gz "https://github.com/opencartbrasil/opencartbrasil/archive/refs/tags/v${VERSION}.tar.gz"; \
+    curl -sSLo opencart.tar.gz "https://github.com/opencartbrasil/opencartbrasil/archive/refs/tags/v1.5.1.tar.gz"; \
     mkdir -p /usr/src/opencart; \
     tar -xzvf opencart.tar.gz -C /usr/src/opencart --strip-components 1; \
     rm opencart.tar.gz; \

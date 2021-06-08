@@ -1,7 +1,6 @@
 {
   "latest": {
     "phpVersions": [
-      "7.3",
       "7.4"
     ],
     "variants": [
@@ -13,7 +12,6 @@
   },
   "1.5.1": {
     "phpVersions": [
-      "7.3",
       "7.4"
     ],
     "variants": [
