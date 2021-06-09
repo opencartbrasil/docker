@@ -4,11 +4,16 @@
     </a>
 </p>
 
-# Como utilizar
+# OpenCart Brasil no Docker
 
-## Iniciando uma nova instância
+## Imagens da versão OpenCart Brasil
 
-Para iniciar é muito simples, execute a linha de comando abaixo em seu terminal:
+- `1.5.1` e `latest`
+- `apache`
+- `fpm`
+- `alpine`
+
+Você pode usar tags para isso. Por exemplo: 
 
 ```bash
 docker run -p 80:80 opencartbrasil:latest
@@ -58,7 +63,7 @@ Conforme o exemplo abaixo:
 
  Assim o processo de instalação e configuração do OpenCart Brasil será realizado automaticamente.
 
- > Observação: Se a conexão com o banco de dados não for estabelecida em até 2 minutos, o processo de instalação automática falhará.
+**Observação:** Se a conexão com o banco de dados não for estabelecida em até 2 minutos, o processo de instalação automática falhará.
 
 ## Instalação via *Docker Compose* ou *Docker Stack Deploy*
 
@@ -105,7 +110,7 @@ services:
 
 Execute no terminal `docker stack deploy -c ocbr.yaml opencartbrasil` ou `docker-compose up`
 
-# Variáveis de Ambiente
+## Variáveis de Ambiente
 
 Ao iniciar a instância do OpenCart Brasil, é possível pré-definir algumas configurações.
 
@@ -149,9 +154,7 @@ Seguem as variáveis de ambientes suportadas:
 | MAIL_TIMEOUT | Tempo máximo, em segundos, de conexão com o servidor SMTP | 30 |
 | MAIL_ADDITIONAL_MAILS | E-mails adicionais. Utilize vírgula para separá-los |  |
 
-# Informações adicionais
-
-## Utilizando OpenCart Brasil com NGINX
+## Configurando o NGINX
 
 Utilizando a versão com [*php-fpm*](https://www.php.net/manual/pt_BR/install.fpm.php), é possível utilizar o [Nginx](https://www.nginx.com/) como servidor web. Para um bom funcionando, utilize a configuração abaixo:
 
@@ -173,6 +176,6 @@ location ~* (\.twig|\.tpl|\.ini|\.log|(?<!robots)\.txt)$ {
 }
 ```
 
-# License
+## Licença
 
 Este projeto é de código aberto licenciado sob a [GPL v3](https://github.com/opencartbrasil/opencartbrasil/blob/main/LICENSE).
