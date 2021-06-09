@@ -6,7 +6,6 @@
 
 # OpenCart Brasil no Docker
 
-![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/opencartbrasil/opencartbrasil)
 ![Docker Pulls](https://img.shields.io/docker/pulls/opencartbrasil/opencartbrasil)
 ![Docker Stars](https://img.shields.io/docker/stars/opencartbrasil/opencartbrasil)
 
