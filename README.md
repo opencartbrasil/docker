@@ -6,12 +6,16 @@
 
 # OpenCart Brasil no Docker
 
+![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/opencartbrasil/opencartbrasil)
+![Docker Pulls](https://img.shields.io/docker/pulls/opencartbrasil/opencartbrasil)
+![Docker Stars](https://img.shields.io/docker/stars/opencartbrasil/opencartbrasil)
+
 ## Imagens da versão OpenCart Brasil
 
-- `1.5.1` e `latest`
-- `apache`
-- `fpm`
-- `alpine`
+- `1.5` e `latest`
+- `1.5-apache`
+- `1.5-fpm`
+- `1.5-alpine`
 
 Você pode usar tags para isso. Por exemplo: 
 
@@ -110,7 +114,7 @@ services:
 
 Execute no terminal `docker stack deploy -c ocbr.yaml opencartbrasil` ou `docker-compose up`
 
-## Variáveis de Ambiente
+## Variáveis de ambiente
 
 Ao iniciar a instância do OpenCart Brasil, é possível pré-definir algumas configurações.
 
