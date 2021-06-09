@@ -1,6 +1,6 @@
 <p align="center">
-    <a href="https://www.opencartbrasil.com.br/">
-        <img src="https://user-images.githubusercontent.com/68618810/121253635-bcde0200-c87f-11eb-809d-1782796bc234.png" alt="Logo OpenCart Brasil">
+    <a href="https://www.opencartbrasil.com.br/" title="OpenCart Brasil">
+        <img src="https://user-images.githubusercontent.com/630535/121281061-b1a1cb00-c8ad-11eb-9c58-82accf999857.png" alt="Logo OpenCart Brasil">
     </a>
 </p>
 
@@ -115,7 +115,7 @@ Seguem as variáveis de ambientes suportadas:
 
 | Nome | Descrição | Padrão |
 | ---- | --------- | ------ |
-| OCBR_HTTP_SERVER | Informa o domínio da loja. É necessário informar o "scheme" da URL. Ex: *https://www.my-store.com/* |  |
+| OCBR_HTTP_SERVER | Informa o domínio da loja. É necessário informar o "scheme" da URL. Ex.: **http://localhost/** |  |
 
 **Banco de Dados**
 
@@ -175,4 +175,4 @@ location ~* (\.twig|\.tpl|\.ini|\.log|(?<!robots)\.txt)$ {
 
 # License
 
-Este projeto é de código aberto licenciado sob a [GPL v3](.LICENSE).
+Este projeto é de código aberto licenciado sob a [GPL v3](https://github.com/opencartbrasil/opencartbrasil/blob/main/LICENSE).
