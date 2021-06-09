@@ -16,10 +16,10 @@
 - `1.5-fpm`
 - `1.5-alpine`
 
-Você pode usar tags para isso. Por exemplo: 
+Você pode usar tags para isso. Por exemplo:
 
 ```bash
-docker run -p 80:80 opencartbrasil:latest
+docker run -p 80:80 opencartbrasil/opencartbrasil:latest
 ```
 
 Sendo que para funcionar corretamente, é necessário realizar antes a conexão com o banco de dados conforme o exemplo abaixo:
@@ -34,7 +34,7 @@ docker run --network some-name \
     mysql:5.7;
 
 # OpenCart Brasil
-docker run --network some-name -p 80:80 opencartbrasil:latest
+docker run --network some-name -p 80:80 opencartbrasil/opencartbrasil:latest
 ```
 
 ## Instalação automática
@@ -61,10 +61,10 @@ Conforme o exemplo abaixo:
     -e OCBR_ADMIN_PASS=123456 \
     -e OCBR_ADMIN_EMAIL=webmaster@localhost \
     -e "OCBR_HTTP_SERVER=http://localhost/" \
-    opencartbrasil:latest
+    opencartbrasil/opencartbrasil:latest
  ```
 
- Assim o processo de instalação e configuração do OpenCart Brasil será realizado automaticamente.
+Assim o processo de instalação e configuração do OpenCart Brasil será realizado automaticamente.
 
 **Observação:** Se a conexão com o banco de dados não for estabelecida em até 2 minutos, o processo de instalação automática falhará.
 
@@ -80,7 +80,7 @@ networks:
 
 services:
   app:
-    image: opencartbrasil:latest
+    image: opencartbrasil/opencartbrasil:latest
     container_name: app
     volumes:
       - ./src:/var/www/html
