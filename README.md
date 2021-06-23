@@ -159,7 +159,7 @@ Seguem as variáveis de ambientes suportadas:
 
 ## Configurando o NGINX
 
-Utilizando a versão com [*php-fpm*](https://www.php.net/manual/pt_BR/install.fpm.php), é possível utilizar o [Nginx](https://www.nginx.com/) como servidor web. Para um bom funcionando, utilize a configuração abaixo:
+Ao utilizar a versão com [*php-fpm*](https://www.php.net/manual/pt_BR/install.fpm.php), é possível utilizar o [Nginx](https://www.nginx.com/) como servidor web. Para um bom funcionamento, utilize a configuração abaixo:
 
 ```
 location / {
@@ -181,4 +181,4 @@ location ~* (\.twig|\.tpl|\.ini|\.log|(?<!robots)\.txt)$ {
 
 ## Licença
 
-Este projeto é de código aberto licenciado sob a [GPL v3](https://github.com/opencartbrasil/opencartbrasil/blob/main/LICENSE).
+Este projeto é de código aberto licenciado sob a [GPL v3](https://github.com/opencartbrasil/docker/blob/main/LICENSE).
