@@ -8,7 +8,18 @@
       "fpm-alpine",
       "apache"
     ],
-    "version": "1.6.0"
+    "version": "1.6.1"
+  },
+  "1.6.1": {
+    "phpVersions": [
+      "7.4"
+    ],
+    "variants": [
+      "fpm",
+      "fpm-alpine",
+      "apache"
+    ],
+    "version": "1.6.1"
   },
   "1.6.0": {
     "phpVersions": [
