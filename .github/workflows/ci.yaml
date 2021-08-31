@@ -1,0 +1,31 @@
+name: Generate New Version
+
+on:
+  workflow_dispatch:
+    inputs:
+      ocVersion:
+        description: "Informe a última versão do OpenCart Brasil"
+        required: true
+
+jobs:
+  generate_versions:
+    name: Generate New Version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install JQ
+        run: sudo apt update; sudo apt install -y jq
+
+      - name: Generate File
+        run: |
+          versions=$(cat versions.json)
+          echo $versions | jq ". + {\"latest\":{\"phpVersions\":[\"7.4\"],\"variants\":[\"fpm\",\"fpm-alpine\",\"apache\"],\"version\":\"${{ github.event.inputs.ocVersion }}\"}} + {\"${{ github.event.inputs.ocVersion }}\":{\"phpVersions\":[\"7.4\"],\"variants\":[\"fpm\",\"fpm-alpine\",\"apache\"],\"version\":\"${{ github.event.inputs.ocVersion }}\"}}" > versions.json
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add versions.json
+          git commit -m "feat: adiciona nova versão"
+          git push
+          git tag "v${{ github.event.inputs.ocVersion }}"
+          git push origin "v${{ github.event.inputs.ocVersion }}"
