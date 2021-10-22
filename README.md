@@ -11,10 +11,10 @@
 
 ## Imagens da versão OpenCart Brasil
 
-- `1.6` e `latest`
-- `1.6-apache`
-- `1.6-fpm`
-- `1.6-alpine`
+- `1.7` e `latest`
+- `1.7-apache`
+- `1.7-fpm`
+- `1.7-alpine`
 
 Você pode usar tags para isso. Por exemplo:
 
